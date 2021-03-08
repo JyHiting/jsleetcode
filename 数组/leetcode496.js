@@ -25,4 +25,4 @@ var nextGreaterElement = function (nums1, nums2) {
     });
     return result
 };
-nextGreaterElement([4,1,2],[1,3,4,2])
+nextGreaterElement([4, 1, 2], [1, 3, 4, 2])
