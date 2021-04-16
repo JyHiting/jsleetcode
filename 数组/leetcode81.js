@@ -69,3 +69,7 @@ var search = function (nums, target) {
 
 search([1, 1], 0)
 
+
+
+
+
