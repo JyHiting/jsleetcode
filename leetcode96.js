@@ -1,3 +1,0 @@
-var numTrees = function (n) {
-
-};
