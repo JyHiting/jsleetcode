@@ -5,63 +5,51 @@ function TreeNode(val, left, right) {
     this.right = (right === undefined ? null : right)
 }
 
-
+//广度优先搜索
 var isCousins = function (root, x, y) {
 
     let queue = [root]
     while (queue.length != 0) {
         let count = queue.length
-        let node = queue.shift()
-        if (node.left) {
-            queue.push(node.left)
-        }
-        if (node.right) {
-            queue.push(node.right)
-        }
-        let tmpArr = []
-        while (count != 0) {
 
+        let tmpArr = []
+        //一层一层来
+        while (count != 0) {
+            let node = queue.shift()
             if (node.left) {
-                let obj = { parent: node, node: node.left }
+                let obj = {}
+                obj.node = node.left
+                obj.parent = node
                 tmpArr.push(obj)
+                queue.push(node.left)
             }
             if (node.right) {
-                let obj = { parent: node, node: node.right }
+                let obj = {}
+                obj.node = node.right
+                obj.parent = node
                 tmpArr.push(obj)
+                queue.push(node.right)
             }
             count--
         }
-
-        let x_node = null, y_node = null
-        for (let x_idx = 0; x_idx < tmpArr.length; x_idx++) {
-            let obj = tmpArr[x_idx]
+        let xNode = null, yNode = null
+        for (let idx = 0; idx < tmpArr.length; idx++) {
+            let obj = tmpArr[idx]
             if (obj.node.val == x) {
-                x_node = obj
+                xNode = obj
             }
             if (obj.node.val == y) {
-                y_node = obj
+                yNode = obj
+            }
+
+            if (xNode && yNode) {
+                console.log(xNode.parent);
+                console.log(yNode.parent);
+                if (xNode.parent !== yNode.parent) {
+                    return true
+                }
             }
         }
-        console.log(x_node.parent.val);
-        console.log(y_node.parent.val);
-
-        if (x_node && y_node) {
-            if (x_node.parent !== y_node.parent) {
-                return true
-            }
-            // for (let y_idx = x_idx + 1; y_idx < tmpArr.length; y_idx++) {
-            //     let obj = tmpArr[y_idx]
-            //     if (obj.node.val == y) {
-
-            //         console.log(obj.node.val);
-            //         if (x_node.parent !== obj.parent) {
-            //             return true
-            //         }
-            //         break
-            //     }
-            // }
-        }
-
     }
     return false
 };
