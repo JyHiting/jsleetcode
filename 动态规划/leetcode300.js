@@ -3,6 +3,7 @@ var lengthOfLIS = function (nums) {
     if (nums.length == 1) {
         return 1
     }
+    //dptable ：以元素i结尾的最大所求值
     let dptable = new Array(nums.length).fill(0)
 
     let result = 0
