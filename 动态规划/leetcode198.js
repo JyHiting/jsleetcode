@@ -21,3 +21,26 @@ var rob = function (nums) {
     }
     return Math.max(dpT[0][nums.length - 1], dpT[1][nums.length - 1])
 };
+
+
+var rob = function (nums) {
+    let dptable = new Array(nums.length).fill(0)
+    for (let i = 0; i < dptable.length; i++) {
+        let arr = new Array(2)
+        dptable[i] = arr
+    }
+    let result = 0
+    for (let i = 0; i < nums.length; i++) {
+        if (i == 0) {
+            dptable[i][0] = 0
+            dptable[i][1] = nums[i]
+        } else {
+            //站在当前房子面前做决策：选则抢或者不抢
+            dptable[i][0] = Math.max(dptable[i - 1][0], dptable[i - 1][1])
+            dptable[i][1] = dptable[i - 1][0] + nums[i]
+        }
+
+        result = Math.max(Math.max(dptable[i][0], dptable[i][1]), result)
+    }
+    return result
+};
