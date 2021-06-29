@@ -1,7 +1,7 @@
 //此题难点在去重
 //下面解法没有去重
 // var combinationSum = function (candidates, target) {
-    
+
 //     var path = []
 //     var result = []
 //     for (let i = 0; i < candidates.length; i++) {
@@ -12,7 +12,7 @@
 // };
 
 // function helper(arr, path, result, target, ele) {
-    
+
 //     path.push(ele)
 //     let newTarget = target - ele
 //     if (newTarget == 0) {
@@ -38,18 +38,18 @@
 //那么在这一层我就不能再选择A，B了只能从已经遍历过的元素中查找，只能从C开始遍历
 //规律来了，这里的去重逻辑就是下面的curIdx干的事
 var combinationSum = function (candidates, target) {
-    
+
     var path = []
     var result = []
     for (let i = 0; i < candidates.length; i++) {
         let ele = candidates[i]
-        helper(candidates,path,result,target,ele,i)
+        helper(candidates, path, result, target, ele, i)
     }
     return result
 };
 
-function helper(arr, path, result, target, ele,curIdx) {
-    
+function helper(arr, path, result, target, ele, curIdx) {
+
     path.push(ele)
     let newTarget = target - ele
     if (newTarget == 0) {
@@ -57,10 +57,38 @@ function helper(arr, path, result, target, ele,curIdx) {
     } else if (newTarget > 0) {
         for (let i = curIdx; i < arr.length; i++) {
             let ele = arr[i]
-            helper(arr,path,result,newTarget,ele,i)
+            helper(arr, path, result, newTarget, ele, i)
         }
     }
     path.pop()
 }
 
-combinationSum([2,3,6,7],7)
+
+var combinationSum = function (candidates, target) {
+
+    candidates.sort((a, b) => {
+        return a - b
+    })
+    let result = [], path = []
+    let dfs = (begin, num) => {
+        if (num < 0) {
+            //已经不符合题意了
+            return
+        }
+        if (num == 0) {
+            //记录一个结果
+            result.push(path.slice(0))
+        }
+        //从数组中挑出元素满足题意，元素可重复使用（组合问题不讲究顺序）
+        //之前用过的就不能再用放在组合中就是一种情况
+        for (let i = begin; i < candidates.length; i++) {
+            path.push(candidates[i])
+            dfs(i, num - candidates[i])
+            path.pop()
+        }
+    }
+    dfs(0, target)
+    return result
+};
+
+combinationSum([2, 3, 6, 7], 7)
